@@ -12,22 +12,37 @@ import { Context } from "../../utils/context"
 import "./Header.scss";
 
 const Header = () => {
+    const [scrolled, setScrolled] = useState(false)
+
+    const handleScroll = () => {
+        if (window.scrollY > 200) {
+            setScrolled(true)
+        } else {
+            setScrolled(false)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll)
+    }, [])
+
     return (
-    <header className="main-header">
+    <header className={`main-header ${scrolled ? 'sticky-header' : ''}`}>
         <div className="header-content">
             <ul className="left">
                 <li>Home</li>
                 <li>Categories</li>
                 <li>About</li>
             </ul>
-        </div>
-        <div className="center">EazyBazaar</div>
-        <div className="left">
-            <TbSearch/>
-            <AiOutlineHeart/>
-            <span className="cart-icon"> 
-                <CgShoppingCart/>
-            </span>
+            <div className="center">EazyBazaar</div>
+            <div className="right">
+                <TbSearch/>
+                <AiOutlineHeart/>
+                <span className="cart-icon"> 
+                    <CgShoppingCart/>
+                    <span>3</span>
+                </span>
+            </div>
         </div>
     </header>
     );
